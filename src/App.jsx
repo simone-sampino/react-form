@@ -1,33 +1,51 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const articles = [
+    'Smartphone',
+    'Headphones',
+    'Tablet',
+    'TV',
+    'PS5',
+  ]
+
+  const [newTask, setNewTask] = useState('')
+  const [tasks, setTasks] = useState(articles)
+
+  function handleSubmit (e) {
+    e.preventDefault()
+    console.log(newTask);
+
+    setTasks([...tasks, newTask])
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+
+      <div className="container mt-5">
+        <ul className='list-group'>
+          {tasks.map((task, index) => {
+            return (
+              <li key={index} className='list-group-item d-flex justify-content-between'>{task}
+                <div className='d-flex gap-3'>
+                  <button className='btn btn-primary'><i className="bi bi-pencil-fill"></i></button>
+                  <button className='btn btn-danger'><i className='bi bi-trash3-fill'></i></button>
+                </div>
+              </li>
+            )
+          })}
+        </ul>
+        
+        <form onSubmit={handleSubmit}>
+          <div className="d-flex gap-3 mt-4">
+            <input className='form-control' placeholder='insert new task' type="text" value={newTask} onChange={event => setNewTask(event.target.value)} />
+            <button type='submit' className='btn btn-success'>
+              <i className='bi bi-floppy-fill'></i> Save
+            </button>
+          </div>
+        </form>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
     </>
   )
 }
