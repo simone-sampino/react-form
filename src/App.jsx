@@ -1,33 +1,51 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const initial_articles = [
+    'Smartphone',
+    'Headphones',
+    'Tablet',
+    'TV',
+    'PS5',
+  ]
+
+  const [newArticle, setNewArticle] = useState('')
+  const [articles, setTasks] = useState(initial_articles)
+
+  function handleSubmit (e) {
+    e.preventDefault()
+    console.log(newArticle);
+
+    setTasks([...articles, newArticle])
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+
+      <div className="container mt-5">
+        <ul className='list-group'>
+          {articles.map((article, index) => {
+            return (
+              <li key={index} className='list-group-item d-flex justify-content-between'>{article}
+                <div className='d-flex gap-3'>
+                  <button className='btn btn-primary'><i className="bi bi-pencil-fill"></i></button>
+                  <button className='btn btn-danger'><i className='bi bi-trash3-fill'></i></button>
+                </div>
+              </li>
+            )
+          })}
+        </ul>
+        
+        <form onSubmit={handleSubmit}>
+          <div className="d-flex gap-3 mt-4">
+            <input className='form-control' placeholder='insert new task' type="text" value={newArticle} onChange={event => setNewArticle(event.target.value)} />
+            <button type='submit' className='btn btn-success'>
+              <i className='bi bi-floppy-fill'></i> Save
+            </button>
+          </div>
+        </form>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
     </>
   )
 }
