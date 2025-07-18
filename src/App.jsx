@@ -10,13 +10,13 @@ function App() {
   ]
 
   const [newArticle, setNewArticle] = useState('')
-  const [articles, setTasks] = useState(initial_articles)
+  const [articles, setArticles] = useState(initial_articles)
 
   function handleSubmit (e) {
     e.preventDefault()
     console.log(newArticle);
 
-    setTasks([...articles, newArticle])
+    setArticles([...articles, newArticle])
   }
 
   return (
@@ -38,7 +38,7 @@ function App() {
         
         <form onSubmit={handleSubmit}>
           <div className="d-flex gap-3 mt-4">
-            <input className='form-control' placeholder='insert new task' type="text" value={newArticle} onChange={event => setNewArticle(event.target.value)} />
+            <input className='form-control' placeholder='Insert new article' type="text" value={newArticle} onChange={event => setNewArticle(event.target.value)} />
             <button type='submit' className='btn btn-success'>
               <i className='bi bi-floppy-fill'></i> Save
             </button>
